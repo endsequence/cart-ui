@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getProductQuery, addToCartMutation } from "../../../utils";
 import HeaderLinks from "../../../components/HeaderLinks";
 import { useRouter } from "next/router";
+import toast from "react-simple-toasts";
 
 export default function Product({ product, variantId }) {
   const router = useRouter();
@@ -24,12 +25,15 @@ export default function Product({ product, variantId }) {
       },
     };
 
-    const { data } = await client.mutate(mutateObject);
-    if (data.addProductToCart) {
-      localStorage.setItem("cart-token", data.addProductToCart.token);
-      router.push("/cart");
+    try {
+      const { data } = await client.mutate(mutateObject);
+      if (data.addProductToCart) {
+        localStorage.setItem("cart-token", data.addProductToCart.token);
+        router.push("/cart");
+      }
+    } catch (e) {
+      toast(e.message);
     }
-    console.log({ data });
   };
 
   return (
