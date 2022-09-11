@@ -4,8 +4,13 @@ import styles from "../../styles/Home.module.css";
 import client from "../../apollo-client";
 import Link from "next/link";
 import { getProductsQuery } from "../../utils";
+import HeaderLinks from "../../components/HeaderLinks";
 
 export default function Home({ products }) {
+  const firstVariant = (product) => {
+    return (product.variants || [])[0].id;
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -15,12 +20,18 @@ export default function Home({ products }) {
       </Head>
 
       <main className={styles.main}>
+        <HeaderLinks />
+
         <h1>Products List</h1>
 
         <div className={styles.grid}>
           {products.map((product) => (
             <div key={product.title} className={styles.card}>
-              <Link href={`/products/${encodeURIComponent(product.id)}`}>
+              <Link
+                href={`/products/${encodeURIComponent(
+                  product.id
+                )}/${encodeURIComponent(firstVariant(product))}`}
+              >
                 <div>
                   <Image
                     src={product.thumbnail}

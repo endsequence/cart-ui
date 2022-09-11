@@ -1,5 +1,23 @@
 import { gql } from "@apollo/client";
 
+const getCartQuery = gql`
+  query FindCart {
+    findCart {
+      id
+      customerId
+      products {
+        title
+        sku
+        variant
+        thumbnail
+        qty
+      }
+      active
+      token
+    }
+  }
+`;
+
 const addToCartMutation = gql`
   mutation Mutation($cart: CartInput) {
     addProductToCart(cart: $cart) {
@@ -54,7 +72,8 @@ const getProductsQuery = gql`
 `;
 
 module.exports = {
+  getCartQuery,
   addToCartMutation,
   getProductQuery,
-  getProductsQuery
+  getProductsQuery,
 };

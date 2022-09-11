@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import styles from "../../styles/Product.module.css";
+import styles from "../../styles/Home.module.css";
 import client from "../../apollo-client";
 import Image from "next/image";
 import Link from "next/link";
